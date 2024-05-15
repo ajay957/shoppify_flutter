@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shoppify/shopping_screen/home_page.dart';
 import 'package:shoppify/shopping_screen/welcome_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,13 +16,29 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void gotoWelcomePage(){
     Timer(const Duration(seconds: 3), () { 
-      Navigator.push(context,
-      MaterialPageRoute(builder: (_) =>const WelcomePage())
+      Navigator.pushReplacement(context,
+      MaterialPageRoute(builder: (_) => checkUserLoggedinOrNot())
       );
     }
     );
   }
 
+  Widget checkUserLoggedinOrNot(){
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(), 
+      builder: (BuildContext context, AsyncSnapshot<User?> user){
+        if(user.connectionState == ConnectionState.waiting){
+          return const CircularProgressIndicator();
+        }else if(user.hasData){
+          return const HomePage();
+        } else {
+           return const WelcomePage();
+        }
+      }
+      
+      );
+  }
+  
   @override
   void initState(){
     gotoWelcomePage();

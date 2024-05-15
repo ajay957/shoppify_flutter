@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:shoppify/shopping_screen/sign_in.dart';
+import 'package:shoppify/shopping_screen/sign_up.dart';
 import 'package:shoppify/widgets/action_button.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
+
+  void gotoSigninPage(BuildContext context){
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => SignInPage())
+    );
+  }
+
+   void gotoSignupPage(BuildContext context){
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => SignUpPage())
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +95,7 @@ class WelcomePage extends StatelessWidget {
                         buttonBgColor:  const Color.fromRGBO(65, 65, 65, 1),
                         buttonTextColor: Colors.white,
                         buttonText: "Sign in", ontap: () { 
-                           SignInPage();
+                           gotoSigninPage(context);
                         },
                       ),
                     const Gap(15),
@@ -90,7 +103,7 @@ class WelcomePage extends StatelessWidget {
                     buttonBgColor:  const Color.fromRGBO(65, 65, 65, 1),
                     buttonTextColor: Colors.white,
                     buttonText: "Sign up", ontap: () { 
-
+                      gotoSignupPage(context);
                     },
                   ),
                     ],
